@@ -75,3 +75,56 @@ with mlflow.start_run():
     # log artifact for model
     mlflow.log_artifact(local_path = "models/lin_reg.bin", artifact_path = "models_pickle")
 ```
+
+<ins>4. XGboost & Hyperopt with MLflow</ins>
+<br>
+The provided code snippet demonstrates how to log and track XGboost & Hyperopt to find its best parameters using MLflow. The process may take a few hours to find the optimal parameters, but it can be stopped at any time based on preference. 
+<br>
+```
+train = xgb.DMatrix(x_train, label = y_train)
+valid = xgb.DMatrix(x_val, label = y_val)
+
+def objective(params):
+    with mlflow.start_run():
+        # log detail
+        mlflow.set_tag("developer", "christopher")
+        # log detail
+        mlflow.set_tag("model", "xgboost")
+        # log parameter
+        mlflow.log_params(params)
+
+        booster = xgb.train(
+            params = params,
+            dtrain = train,
+            num_boost_round = 1000,
+            evals = [(valid, 'validation')],
+            early_stopping_rounds = 50
+        )
+
+        y_pred = booster.predict(valid)
+        rmse = root_mean_squared_error(y_val, y_pred)
+
+        # log metric
+        mlflow.log_metric("rmse", rmse)
+
+    return {'loss': rmse, 'status': STATUS_OK}
+
+# search space to find the best hyperparameter
+search_space = {
+    'max_depth': scope.int(hp.quniform('max_depth', 4, 100, 1)),
+    'learning_rate': hp.loguniform('learning_rate', -3, 0),
+    'reg_alpha': hp.loguniform('reg_alpha', -5, -1),
+    'reg_lambda': hp.loguniform('reg_lambda', -6, -1),
+    'min_child_weight': hp.loguniform('min_child_weight', -1, 3),
+    'objective': 'reg:linear',
+    'seed': 42
+}
+
+best_result = fmin(
+    fn = objective,
+    space = search_space,
+    algo = tpe.suggest,
+    max_evals = 50,
+    trials = Trials()
+)
+```
