@@ -116,7 +116,7 @@ search_space = {
     'reg_alpha': hp.loguniform('reg_alpha', -5, -1),
     'reg_lambda': hp.loguniform('reg_lambda', -6, -1),
     'min_child_weight': hp.loguniform('min_child_weight', -1, 3),
-    'objective': 'reg:linear',
+    'objective': 'reg:squarederror',
     'seed': 42
 }
 
@@ -128,3 +128,4 @@ best_result = fmin(
     trials = Trials()
 )
 ```
+In the MLflow UI, kindly filter for `tags.model = 'xgboost'`. Then, sort the RMSE in a descending order to identify the best model. Once you've found it, retrieve its optimal parameters.
