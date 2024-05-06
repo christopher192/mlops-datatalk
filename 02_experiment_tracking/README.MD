@@ -14,7 +14,7 @@ Below is the command to interacting with MLflow.
 ## <ins>Experiment tracking with MLflow</ins>
 <ins>1. Create experiment</ins>
 <br>
-The provided code snippet sets up an MLflow tracking server using SQLite as the backend store. The `mlflow.set_tracking_uri("sqlite:///mlflow.db")` command will set the tracking URI to a SQLite database named `mlflow.db`, automatically create it if non exist. The database will be used to store experiment metadata. The `mlflow.set_experiment("nyc-taxi-experiment")` command creates a new experiment named "nyc-taxi-experiment". If an experiment with this name already exists, it will be reused. This command also creates a directory named mlruns where the experiment data will be stored.
+The provided code snippet sets up an MLflow tracking server using SQLite as the backend store. The `mlflow.set_tracking_uri("sqlite:///mlflow.db")` command will set the tracking URI to a SQLite database named `mlflow.db`, automatically create it if the experiment does not exist. The database will be used to store experiment metadata. The `mlflow.set_experiment("nyc-taxi-experiment")` command creates a new experiment named "nyc-taxi-experiment". If an experiment with this name already exists, it will be reused. This command also creates a directory named mlruns where the experiment data will be stored.
 ```
 # create SQLite mflow.db
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
