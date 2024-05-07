@@ -4,17 +4,18 @@
 ## <ins>Introduction</ins>
 There are numerous experiment tracking tools exist to assist in managing experiments and other components including parameters, metrics, models, artifacts, etc. Tools such as MLflow, DVC, ClearML, Comet ML, Weights & Biases and many more are readily available in the market, offering both free and paid services. MLflow, being a free and open-source tool, will be implemented in workflow. 
 
-## <ins>MLflow`s command-line interface</ins>
+## <ins>MLflow`s Command-line Interface</ins>
 Below is the command to interacting with MLflow.
-<br>
+<br />
 `mlflow ui` <- execute this if prefer to stole experimental data as mlflow.yaml
-<br>
+<br />
 `mlflow ui --backend-store-uri sqlite:///mlflow.db` <- execute this if prefer to stole experimental data as SQLite database
 
-## <ins>Experiment tracking with MLflow</ins>
+## <ins>Experiment Tracking with MLflow</ins>
 <ins>1. Create experiment</ins>
-<br>
+<br />
 The provided code snippet sets up an MLflow tracking server using SQLite as the backend store. The `mlflow.set_tracking_uri("sqlite:///mlflow.db")` command will set the tracking URI to a SQLite database named `mlflow.db`, automatically create it if the experiment does not exist. The database will be used to store experiment metadata. The `mlflow.set_experiment("nyc-taxi-experiment")` command creates a new experiment named "nyc-taxi-experiment". If an experiment with this name already exists, it will be reused. This command also creates a directory named mlruns where the experiment data will be stored.
+
 ```
 # create SQLite mflow.db
 mlflow.set_tracking_uri("sqlite:///mlflow.db")
@@ -24,8 +25,9 @@ mlflow.set_experiment("nyc-taxi-experiment")
 ```
 
 <ins>2. Delete experiment</ins>
-<br>
+<br />
 This command used to remove MLflow experiment, identified by its ID.
+<br />
 ```
 mlflow.delete_experiment(experiment_id = '1')
 ```
@@ -41,9 +43,9 @@ mlflow gc --backend-store-uri sqlite:///mlflow.db --experiment-ids 1
 There are interesting discussion for this issue, kindly refer https://stackoverflow.com/questions/60088889/how-do-you-permanently-delete-an-experiment-in-mlflow.
 
 <ins>3. Log and track machine learning experiment</ins>
-<br>
+<br />
 The provided code snippet demonstrates how to log, track, save machine learning experiments using MLflow.
-<br>
+<br />
 ```
 with mlflow.start_run():
     # log detail
@@ -77,9 +79,9 @@ with mlflow.start_run():
 ```
 
 <ins>4. XGboost & Hyperopt with MLflow</ins>
-<br>
+<br />
 The provided code snippet demonstrates how to log and track XGboost & Hyperopt to find its best parameters using MLflow. The process may take a few hours to find the optimal parameters, but it can be stopped at any time based on preference. 
-<br>
+<br />
 ```
 train = xgb.DMatrix(x_train, label = y_train)
 valid = xgb.DMatrix(x_val, label = y_val)
@@ -128,10 +130,10 @@ best_result = fmin(
     trials = Trials()
 )
 ```
-In the MLflow UI, kindly filter for `tags.model = 'xgboost'`. Then, sort the RMSE in a descending order to identify the best model. Once you've found it, retrieve its optimal parameters. May click `compare` button to have more insight on optimal parameters.
+In the MLflow UI, kindly filter for `tags.model = 'xgboost'`. Then, sort the RMSE in a ascending order to identify the best model. Once you've found it, retrieve its optimal parameters. May click `compare` button to have more insight on optimal parameters.
 
-<ins>5. XGboost with Best Parameters</ins>
-<br>
+<ins>5. XGboost with best parameters</ins>
+<br />
 The following code snippet demonstrates how to train an XGBoost model using the best parameters obtained from previous step.
 ```
 # use best parameter to train the model
@@ -161,7 +163,7 @@ Below image is the overview of metrics after training.
 ![alt text](../images/mlflow-overview.png)
 
 <ins>5. Load model with MLflow</ins>
-<br>
+<br />
 By modifying the code from with `mlflow.start_run():` to `with mlflow.start_run() as run:`, we can acquire the run id. This allows us to load the model from the tracking server
 
 ```
@@ -176,4 +178,103 @@ xgboost_model = mlflow.xgboost.load_model(logged_model)
 y_pred = xgboost_model.predict(valid)
 ```
 
-## <ins>Model registry with MLflow</ins>
+## <ins>Model Registry with MLflow</ins>
+MLflow's model registry provides a platform for storing and versioning trained machine learning models. This feature greatly simplify the task of tracking and managing models. It also facilitates the transition of models through various stages such as `staging`, `production`, and `archive`.
+
+- `staging` > Move model when it's ready for testing or review.
+- `production` > Move model that has been tested and reviewed and is ready to be used for making actual predictions in a live application.
+- `archive` > When model version is no longer in use, you can move it to this stage.
+
+![alt text](../images/model-registry.png)
+
+<ins>1. Access to tracking server</ins>
+```
+# access to tracking server
+MLFLOW_TRACKING_URI = "sqlite:///mlflow.db"
+
+client = MlflowClient(tracking_uri = MLFLOW_TRACKING_URI)
+client.search_experiments()
+```
+
+<ins>2. Create experiment</ins>
+```
+client.create_experiment(name = "my-cool-experiment")
+```
+
+<ins>3. Filter RMSE</ins>
+```
+# filter RMSE based on selected criteria
+runs = client.search_runs(
+    experiment_ids = '1',
+    filter_string = "metrics.rmse < 7",
+    run_view_type = ViewType.ACTIVE_ONLY,
+    max_results = 5,
+    order_by = ["metrics.rmse ASC"]
+)
+
+for run in runs:
+    print(f"run id: {run.info.run_id}, rmse: {run.data.metrics['rmse']:.4f}")
+```
+
+<ins>4. Register model</ins>
+```
+# register model
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+
+run_id = "56a535cc40b342b68c60dc87c8f559be"
+model_uri = f"runs:/{run_id}/model"
+
+mlflow.register_model(model_uri = model_uri, name = "nyc-taxi-regressor")
+```
+
+<ins>5. View all registered model</ins>
+```
+# view all registered models
+model_name = "nyc-taxi-regressor"
+latest_versions = client.search_model_versions(f"name='{model_name}'")
+
+for version in latest_versions:
+    print(f"version: {version.version}, stage: {version.current_stage}")
+```
+
+<ins>6. Move model to specific stage</ins>
+```
+# move model to staging
+model_version = 3
+new_stage = "Staging"
+
+client.transition_model_version_stage(
+    name = model_name,
+    version = model_version,
+    stage = new_stage,
+    archive_existing_versions = False
+)
+```
+
+<ins>7. Update registered model</ins>
+```
+# update registered model data
+date = datetime.today().date()
+
+client.update_model_version(
+    name = model_name,
+    version = model_version,
+    description = f"The model version {model_version} was transitioned to {new_stage} on {date}"
+)
+```
+
+<ins>8. Model prediction</ins>
+```
+model = mlflow.pyfunc.load_model(f"models:/{name}/{stage}")
+y_pred = model.predict(x_test)
+```
+
+<ins>9. Model transition to production</ins>
+```
+client.transition_model_version_stage(
+    name = model_name,
+    version = 3,
+    stage = "Production",
+    archive_existing_versions = True
+)
+```
