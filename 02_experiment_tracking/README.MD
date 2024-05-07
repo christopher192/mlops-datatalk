@@ -198,6 +198,7 @@ client.search_experiments()
 
 <ins>2. Create experiment</ins>
 ```
+# create experiment
 client.create_experiment(name = "my-cool-experiment")
 ```
 
@@ -265,12 +266,14 @@ client.update_model_version(
 
 <ins>8. Model prediction</ins>
 ```
+# model prediction
 model = mlflow.pyfunc.load_model(f"models:/{name}/{stage}")
 y_pred = model.predict(x_test)
 ```
 
 <ins>9. Model transition to production</ins>
 ```
+# model transition to production
 client.transition_model_version_stage(
     name = model_name,
     version = 3,
