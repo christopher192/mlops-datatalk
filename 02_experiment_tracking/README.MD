@@ -128,4 +128,52 @@ best_result = fmin(
     trials = Trials()
 )
 ```
-In the MLflow UI, kindly filter for `tags.model = 'xgboost'`. Then, sort the RMSE in a descending order to identify the best model. Once you've found it, retrieve its optimal parameters.
+In the MLflow UI, kindly filter for `tags.model = 'xgboost'`. Then, sort the RMSE in a descending order to identify the best model. Once you've found it, retrieve its optimal parameters. May click `compare` button to have more insight on optimal parameters.
+
+<ins>5. XGboost with Best Parameters</ins>
+<br>
+The following code snippet demonstrates how to train an XGBoost model using the best parameters obtained from previous step.
+```
+# use best parameter to train the model
+params = {
+    'learning_rate': 0.6653267087715755,
+    'max_depth': 20,
+    'min_child_weight': 19.965812980250803,
+    'objective': 'reg:squarederror',
+    'reg_alpha': 0.18289424399274412,
+    'reg_lambda': 0.0969372299406269,
+    'seed': 42
+}
+
+# enable autolog
+mlflow.xgboost.autolog(disable = False)
+
+with mlflow.start_run():
+    booster = xgb.train(
+        params = params,
+        dtrain = train,
+        num_boost_round = 1000,
+        evals = [(valid, 'validation')],
+        early_stopping_rounds = 50
+    )
+```
+Below image is the overview of metrics after training.
+![alt text](../images/mlflow-overview.png)
+
+<ins>5. Load model with MLflow</ins>
+<br>
+By modifying the code from with `mlflow.start_run():` to `with mlflow.start_run() as run:`, we can acquire the run id. This allows us to load the model from the tracking server
+
+```
+# obtain run id
+run_id = run.info.run_id
+
+# load model from MLflow
+logged_model = f'runs:/{run_id}/model'
+loaded_model = mlflow.pyfunc.load_model(logged_model)
+xgboost_model = mlflow.xgboost.load_model(logged_model)
+
+y_pred = xgboost_model.predict(valid)
+```
+
+## <ins>Model registry with MLflow</ins>
