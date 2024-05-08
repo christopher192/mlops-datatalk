@@ -54,4 +54,4 @@ Transform the `duration_prediction.ipynb` notebook into the `orchestrate.py` scr
 
 <ins>3. Flow deployment with GitHub</ins>
 <br>
-Firstly, execute this command `prefect work-pool create --type process zoompool` to create worker. Ensure GitHub code is up-to-date, begin by running the command `prefect init --recipe git`, followed by `prefect deploy 03_orchestration/3.4/orchestrate.py:main_flow --name taxil --pool zoompool`. After completion, execute `prefect deployment run 'main-flow/taxil'` and `prefect worker start --pool 'zoompool'` to initiate the run.
+Firstly, execute this command `prefect work-pool create --type process zoompool` to create worker. Ensure GitHub code is up-to-date, begin by running the command `prefect init --recipe git` in parent folder, followed by `prefect deploy 03_orchestration/3.4/orchestrate.py:main_flow --name taxil --pool zoompool`. After completion, execute `prefect deployment run 'main-flow/taxil'` and `prefect worker start --pool 'zoompool'` to initiate the run.
