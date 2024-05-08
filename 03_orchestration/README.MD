@@ -4,29 +4,29 @@
 ## <ins>Introduction</ins>
 
 ## <ins>Prefect`s Command-line Interface</ins>
-Below is the command to interacting with Prefect server.
+Command to interact with Prefect server.
 <br />
 ```
 prefect server start
 ```
 
-Below command initialize a new Prefect project with a specific recipe.
+Command to initialize a new Prefect project with a specific recipe.
 <br>
 ```
 prefect init --recipe git
 ```
 
-Below command for worker creation
+Command for worker creation
 ```
 prefect work-pool create --type process zoompool
 ```
 
-Below command to start worker
+Command to start worker
 ```
 prefect worker start --pool "zoompool"
 ```
 
-Below command for initializing deployment
+Command for initializing deployment
 ```
 prefect deploy --all
 ```
@@ -47,5 +47,6 @@ Navigate to the directory `3.2` for a basic example. Run the commands `python ca
 <br>
 Transform the `duration_prediction.ipynb` notebook into the `orchestrate.py` script. Then, navigate to the `3.3` directory and execute the command `python orchestrate.py`. Visit the Prefect UI again to gain deeper understanding of the workflow. Note that MLflow is utilized in this script.
 
-<ins>3. Deploying workflow</ins>
+<ins>3. Flow deployment with GitHub</ins>
 <br>
+Ensure GitHub code is up-to-date.
