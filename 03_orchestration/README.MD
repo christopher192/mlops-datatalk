@@ -55,3 +55,21 @@ Transform the `duration_prediction.ipynb` notebook into the `orchestrate.py` scr
 <ins>3. Flow deployment with GitHub</ins>
 <br>
 Firstly, execute this command `prefect work-pool create --type process zoompool` to create worker. Ensure GitHub code is up-to-date, begin by running the command `prefect init --recipe git` in parent folder, followed by `prefect deploy 03_orchestration/3.4/orchestrate.py:main_flow --name taxil --pool zoompool`. After completion, execute `prefect deployment run 'main-flow/taxil'` and `prefect worker start --pool 'zoompool'` to initiate the run.
+
+<ins>4. Data Loading from AWS S3</ins>
+<br>
+- Create S3 Bucket at AWS S3 then upload the NYC data.
+- Create user at Identity and Access Management (IAM).
+- Assign S3 Full Access Role.
+- `Security credentials` -> `Access keys` -> `Other` to create access key.
+- Assign `Access key ID` and `Secret access key` to `create_s3_bucket_block.py`.
+- Ensure that the bucket name in `create_s3_bucket_block.py` matches the name of the S3 Bucket you've created.
+
+The above steps will establish AWS blocks in the Prefect server. Upon completion, run `create_s3_bucket_block.py` followed by `orchestrate_s3.py`.
+
+```
+create_markdown_artifact(
+    key = "duration-model-report", markdown = markdown__rmse_report
+)
+```
+The above code snippet generates a report within Prefect Artifacts.
