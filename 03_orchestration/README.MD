@@ -26,7 +26,7 @@ Below command to start worker
 prefect worker start --pool "zoompool"
 ```
 
-Below command for deployment
+Below command for initializing deployment
 ```
 prefect deploy --all
 ```
