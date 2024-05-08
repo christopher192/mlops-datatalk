@@ -31,7 +31,7 @@ Command for initializing deployment.
 prefect deploy --all
 ```
 ```
-prefect deploy orchestrate.py:main_flow --name taxil --pool zoompool
+prefect deploy 03_orchestration/3.4/orchestrate.py:main_flow --name taxil --pool zoompool
 ```
 
 Command to run deployment.
@@ -79,3 +79,8 @@ s3_bucket_block = S3Bucket.load("s3-bucket")
 s3_bucket_block.download_folder_to_path(from_folder = "data", to_folder = "data")
 ```
 The above code snippet retrieves data from AWS S3 and downloads it to a local directory.
+
+```
+prefect deploy 03_orchestration/3.5/orchestrate_s3.py:main_flow --name taxil --pool zoompool
+```
+Execute above code snippet if prefer to deploy two flows under same `--name taxil` `--pool zoompool`.

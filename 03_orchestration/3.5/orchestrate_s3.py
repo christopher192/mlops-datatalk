@@ -128,7 +128,7 @@ def train_best_model(
 
     return None
 
-@flow
+@flow(name = "Main Flow 2")
 def main_flow(
     train_path: str = "data/green_tripdata_2021-01.parquet",
     val_path: str = "data/green_tripdata_2021-02.parquet",

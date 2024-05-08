@@ -48,3 +48,18 @@ deployments:
     anchor_date: '2024-05-08T07:05:18.894116+00:00'
     timezone: UTC
     active: true
+- name: taxil
+  version:
+  tags: []
+  description: 'The main training pipeline '
+  entrypoint: 03_orchestration/3.5/orchestrate_s3.py:main_flow
+  parameters: {}
+  work_pool:
+    name: zoompool
+    work_queue_name:
+    job_variables: {}
+  schedules:
+  - interval: 3600.0
+    anchor_date: '2024-05-08T07:05:18.894116+00:00'
+    timezone: UTC
+    active: true
