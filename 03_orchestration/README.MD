@@ -73,3 +73,9 @@ create_markdown_artifact(
 )
 ```
 The above code snippet generates a report within Prefect Artifacts.
+
+```
+s3_bucket_block = S3Bucket.load("s3-bucket")
+s3_bucket_block.download_folder_to_path(from_folder = "data", to_folder = "data")
+```
+The above code snippet retrieves data from AWS S3 and downloads it to a local directory.
