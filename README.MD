@@ -9,3 +9,6 @@ The dataset for this course can be obtained via https://www.nyc.gov/site/tlc/abo
 ## <ins>Practical Overview</ins>
 1. Introduction
 2. Experiment Tracking
+3. Orchestration
+4. Deployment
+5. Monitoring
