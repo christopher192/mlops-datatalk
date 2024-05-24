@@ -2,6 +2,11 @@
 # Deployment
 
 ## <ins>Introduction</ins>
+In this section, it is the process of deploying a machine learning model as a web service.
+- Creating a virtual environment with Pipenv
+- Creating a script for predictiong
+- Putting the script into a Flask app
+- Packaging the app to Docker
 
 ## <ins>Command-line Interface</ins>
 ```

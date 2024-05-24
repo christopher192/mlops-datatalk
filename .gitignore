@@ -4,3 +4,4 @@ mlflow.db
 models
 preprocessor
 .prefect
+workspace
