@@ -3,10 +3,13 @@ import pickle
 import click
 import mlflow
 import numpy as np
+from math import sqrt
+from mlflow.tracking import MlflowClient
 from hyperopt import STATUS_OK, Trials, fmin, hp, tpe
 from hyperopt.pyll import scope
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
+from mlflow.entities import ViewType
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("random-forest-hyperopt")
@@ -15,10 +18,16 @@ def load_pickle(filename: str):
     with open(filename, "rb") as f_in:
         return pickle.load(f_in)
 
+def get_experiment_id(client, name):
+    experiments = client.search_experiments()
+    for exp in experiments:
+        if exp.name == name:
+            return exp.experiment_id
+
 @click.command()
 @click.option(
     "--data_path",
-    default = "./output",
+    default = "output",
     help = "Location where the processed NYC taxi trip data was saved"
 )
 @click.option(
@@ -30,11 +39,25 @@ def run_optimization(data_path: str, num_trials: int):
     X_train, y_train = load_pickle(os.path.join(data_path, "train.pkl"))
     X_val, y_val = load_pickle(os.path.join(data_path, "val.pkl"))
 
+    mlflow_tracking_url = "sqlite:///mlflow.db"
+    experiment_name = "random-forest-hyperopt"
+    client = MlflowClient(tracking_uri = mlflow_tracking_url)
+
+    mlflow.set_tracking_uri(mlflow_tracking_url)
+    mlflow.set_experiment(experiment_name)
+    mlflow.sklearn.autolog(disable = True)
+
     def objective(params):
-        rf = RandomForestRegressor(**params)
-        rf.fit(X_train, y_train)
-        y_pred = rf.predict(X_val)
-        rmse = mean_squared_error(y_val, y_pred, squared = False)
+        with mlflow.start_run():
+            mlflow.set_tag("model", "random-forest")
+            mlflow.log_params(params)
+
+            rf = RandomForestRegressor(**params)
+            rf.fit(X_train, y_train)
+            y_pred = rf.predict(X_val)
+            rmse = sqrt(mean_squared_error(y_val, y_pred))
+
+            mlflow.log_metric("rmse", rmse)
 
         return {'loss': rmse, 'status': STATUS_OK}
 
@@ -55,6 +78,19 @@ def run_optimization(data_path: str, num_trials: int):
         trials = Trials(),
         rstate = rstate
     )
+
+    experiment_id = get_experiment_id(client, experiment_name)
+
+    top_3_lowest_rmse = client.search_runs(
+        experiment_ids = experiment_id,
+        filter_string = "metrics.rmse < 6.0 and tags.model = 'random-forest' and attributes.status = 'FINISHED'",
+        run_view_type = ViewType.ACTIVE_ONLY,
+        max_results = 3,
+        order_by = ["metrics.total_train_loss ASC"]
+    )
+
+    for tl in top_3_lowest_rmse:
+        print(f"run id: {tl.info.run_id}, total_train_loss: {tl.data.metrics['rmse']:.4f}")
 
 if __name__ == '__main__':
     run_optimization()

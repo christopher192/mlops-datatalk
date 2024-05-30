@@ -41,7 +41,7 @@ def train_and_log_model(data_path, params):
 @click.command()
 @click.option(
     "--data_path",
-    default = "./output",
+    default = "output",
     help = "Location where the processed NYC taxi trip data was saved"
 )
 @click.option(
@@ -61,15 +61,27 @@ def run_register_model(data_path: str, top_n: int):
         max_results = top_n,
         order_by = ["metrics.rmse ASC"]
     )
+
     for run in runs:
         train_and_log_model(data_path = data_path, params = run.data.params)
 
-    # select the model with the lowest test RMSE
+    # select the model with the lowest test rmse
     experiment = client.get_experiment_by_name(EXPERIMENT_NAME)
-    # best_run = client.search_runs( ...  )[0]
+    best_run = client.search_runs(
+        experiment_ids = experiment.experiment_id,
+        run_view_type = ViewType.ACTIVE_ONLY,
+        max_results = top_n,
+        order_by = ["metrics.rmse ASC"]
+    )[0]
+
+    best_run_id = best_run.info.run_id
+    best_run_id_test_rmse = best_run.data.metrics["test_rmse"]
+
+    print(f"best_run_id_test_rmse: {best_run_id_test_rmse}")
 
     # register the best model
-    # mlflow.register_model( ... )
+    model_uri = f"runs:/{best_run_id}/model"
+    mlflow.register_model(model_uri = model_uri, name = "nyc-taxi-random-forest")
 
 if __name__ == '__main__':
     run_register_model()
