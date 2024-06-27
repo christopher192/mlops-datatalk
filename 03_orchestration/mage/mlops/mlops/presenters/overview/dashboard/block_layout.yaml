@@ -16,6 +16,10 @@ blocks:
     skip_render: false
     type: chart
     uuid: distribution_of_performance_metrics
+  royal_grass:
+    name: royal grass
+    type: chart
+    uuid: royal_grass
   runs_by_model__pie_chart_:
     configuration:
       chart_type: pie chart
@@ -112,4 +116,6 @@ layout:
     max_width_percentage: 0
     width: 2
   - block_uuid: runs_by_model__pie_chart_
+    width: 1
+- - block_uuid: royal_grass
     width: 1
