@@ -1,0 +1,9 @@
+training_set_2:
+  object_type: pipeline
+  object_uuid: data_preparation
+  outdated_after:
+    seconds: 600
+  project: unit_1_data_preparation
+  repo_path: /home/src/mlops/unit_1_data_preparation
+  settings:
+    build: {}
