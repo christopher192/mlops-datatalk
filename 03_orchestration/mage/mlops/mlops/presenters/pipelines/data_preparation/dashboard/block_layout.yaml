@@ -1,0 +1,8 @@
+blocks:
+  bitter_paper:
+    name: bitter paper
+    type: chart
+    uuid: bitter_paper
+layout:
+- - block_uuid: bitter_paper
+    width: 1
