@@ -1,0 +1,84 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: unit_2_training/data_loaders/ingest_1.py
+  downstream_blocks:
+  - prepare_1
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: ingest_1
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: ingest_1
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: unit_2_training/transformers/prepare_1.py
+  downstream_blocks:
+  - build_1
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: prepare_1
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - ingest_1
+  uuid: prepare_1
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: unit_2_training/data_exporters/build_1.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: build_1
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - prepare_1
+  uuid: build_1
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-06-27 06:29:18.184416+00:00'
+data_integration: null
+description: data preparation
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: data_preparation_2
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: data_preparation_2
+variables:
+  split_on_feature: lpep_pickup_datetime
+  split_on_feature_value: '2024-02-01'
+  target: duration
+variables_dir: /home/src/mage_data/unit_2_training
+widgets: []
