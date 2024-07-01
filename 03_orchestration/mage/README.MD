@@ -1,7 +1,7 @@
 
 ## Orchestration - Mage
 
-### <ins>Introduction</ins>
+### <ins>1. Introduction - ML Pipeline & Mage</ins>
 Mage is orchestrator tool, it is an open-source pipeline tools for orchestrating, transforming and integrating data.
 
 ### <ins>Mage in Codespaces</ins>
@@ -56,7 +56,7 @@ volumes:
 
 4. Open [`http://localhost:6789`](http://localhost:6789) in browser.
 
-### <ins>Data Preparation</ins>
+### <ins>2. Data Preparation -  ETL & Feature Engineering</ins>
 1. New Project
     - Use `New Mage Project` to create a project named `unit_1_data_preparation`.
     - Navigate to `Settings > Settings` to `Register project`, if required.
@@ -121,9 +121,15 @@ volumes:
     - Click `Data exporter` then choose `Base template (generic)` option.
     - Copy code from [`build.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/data_exporters/build.py).
 
-### <ins>Training</ins>
+### <ins>3. Training - Sklearn Model & XGBoost</ins>
 
-### <ins>Issue</ins>
+### <ins>4. Observability - Monitoring & Alerting</ins>
+
+### <ins>5. Triggering - Inference & Retraining</ins>
+
+### <ins>6. Deploying - Running Operation in Production</ins>
+
+### <ins>7. Issue</ins>
 1. Codespaces
 <br>Docker auto-creates `.gitconfig` as a directory instead of a file.
 ```bash
