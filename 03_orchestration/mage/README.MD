@@ -122,6 +122,22 @@ volumes:
     - Copy code from [`build.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/data_exporters/build.py).
 
 ### <ins>3. Training - Sklearn Model & XGBoost</ins>
+### <ins>Sklearn Model</ins>
+1. Under `unit_2_training` folder, import pipeline `data_preparation` from `unit_1_data_preparation` folder.
+2. Register `Training set` as a `global data product`. Choose the `data_preparation` pipeline, then the `build` block.Set `Outdated after` to `600` seconds.
+3. Create new pipeline named `sklearn training`, populate content to `description` as needed.
+4. Create new block for `Training set` from `global data product` lists.
+5. Create custom `Python block` named `Load models`, choose `teal` as color. Copy code from [`load_models.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/custom/load_models.py). Finally, click `Set block as dynamic`.
+6. Optionally, create `Markdown` block named `Dynamic block` between `Training set` block and `Load models` block.
+7. Click `Transformer` then choose `Base template (generic)` option, name it as `Hyperparameter tuning/sklearn`. Copy code from [`transformers/hyperparameter_tuning/sklearn.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/transformers/hyperparameter_tuning/sklearn.py)
+8. Create new file `hyperparameters/shared.py` under `utils` folder, copy code from [`utils/hyperparameters/shared.py`](https://github.com/mage-ai/mlops/blob/master/mlops/utils/hyperparameters/shared.py). Finally, create `__init__.py` under `hyperparameters` folder.
+9. Create new file `models/sklearn.py` under `utils` folder, copy code from [`utils/models/sklearn.py`](https://github.com/mage-ai/mlops/blob/master/mlops/utils/models/sklearn.py). Finally, create `__init__.py` under `models` folder.
+10. Create global variables `max_evaluations = 50` and `random_state = 7`.
+11. Click `Data exporter` then choose `Base template (generic)` option. Name the block as `sklearn`, copy code from [`data_exporters/sklearn.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/data_exporters/sklearn.py).
+
+![alt text](image/mage-1.png)
+
+### <ins>XGBoost</ins>
 
 ### <ins>4. Observability - Monitoring & Alerting</ins>
 
