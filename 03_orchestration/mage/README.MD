@@ -143,7 +143,10 @@ volumes:
 3. Create `Transformer` block, name it as `Hyperparameter tuning/XGBoost`. Code code from [`transformers/hyperparameter_tuning/xgboost.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/transformers/hyperparameter_tuning/xgboost.py).
 4. Create new file `utils/models/xgboost.py`, copy code from [`utils/models/xgboost.py`](https://github.com/mage-ai/mlops/blob/master/mlops/utils/models/xgboost.py).
 5. Create new file `utils/logging.py`, copy code from [`utils/logging.py`](https://github.com/mage-ai/mlops/blob/master/mlops/utils/logging.py).
-6. Add global variable `max_evaluations > 50` and `early_stopping_rounds > 40`.
+6. Add global variable `max_evaluations = 3`, `early_stopping_rounds = 3` and `max_depth = 10`.
+7. Create `Data exporter` block, name it as `XGBoost`. Copy code from [`data_exporters/xgboost.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/data_exporters/xgboost.py).
+
+![alt text](image/image-2.png)
 
 ### <ins>4. Observability - Monitoring & Alerting</ins>
 
