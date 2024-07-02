@@ -135,7 +135,7 @@ volumes:
 10. Create global variables `max_evaluations = 50` and `random_state = 7`.
 11. Click `Data exporter` then choose `Base template (generic)` option. Name the block as `sklearn`, copy code from [`data_exporters/sklearn.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/data_exporters/sklearn.py).
 
-![alt text](image/mage-1.png)
+![alt text](image/image-1.png)
 
 ### <ins>3.2. XGBoost</ins>
 1. Create new pipeline named `xgboost training`, populate content to `description` as needed.
