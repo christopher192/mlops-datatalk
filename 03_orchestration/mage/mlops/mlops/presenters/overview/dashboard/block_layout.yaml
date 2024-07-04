@@ -28,17 +28,6 @@ blocks:
     skip_render: false
     type: chart
     uuid: runs_by_model__pie_chart_
-  testttdasd:
-    configuration:
-      chart_type: time series line chart
-    data_source:
-      type: chart_code
-    error: null
-    name: testttdasd
-    name_new: testttdasd
-    skip_render: false
-    type: chart
-    uuid: testttdasd
   time_series__mse_:
     configuration:
       chart_type: time series bar chart
@@ -123,6 +112,4 @@ layout:
     max_width_percentage: 0
     width: 2
   - block_uuid: runs_by_model__pie_chart_
-    width: 1
-- - block_uuid: testttdasd
     width: 1

@@ -4,6 +4,4 @@ from mlops.utils.analytics.data import load_data
 
 @data_source
 def data(*args, **kwargs):
-    df=load_data()
-    df['start_time_seconds']=df['start_time'].astype(np.int64)//10**9
-    return df
+    return load_data()
