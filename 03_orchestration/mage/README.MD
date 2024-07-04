@@ -176,6 +176,8 @@ volumes:
 4. Copy code from [`SHAP values`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/charts/shap_values.py), [`SHAP values bar chart`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/charts/shap_values_bar.py), and [`SHAP values force plot`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/charts/shap_values_force_chart.py).
 
 ### <ins>4.4. Model Performance Dashboard</ins>
+1. Create new files `utils/analytics/data.py` and `utils/analytics/__init__.py`. Copy code from [`utils/analytics/data.py`](https://github.com/mage-ai/mlops/blob/master/mlops/utils/analytics/data.py).
+2. 
 
 ### <ins>5. Triggering - Inference & Retraining</ins>
 
