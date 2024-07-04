@@ -67,6 +67,10 @@ blocks:
     skip_render: false
     type: chart
     uuid: failed_pipeline_runs_daily_sklearn_training_l7
+  knightly_bard:
+    name: knightly bard
+    type: chart
+    uuid: knightly_bard
   pipeline_run_status_sklearn_training_u5:
     configuration:
       chart_style: horizontal
@@ -157,4 +161,6 @@ layout:
 - - block_uuid: completed_pipeline_runs_daily_sklearn_training_j2
     width: 1
   - block_uuid: failed_pipeline_runs_daily_sklearn_training_l7
+    width: 1
+- - block_uuid: knightly_bard
     width: 1

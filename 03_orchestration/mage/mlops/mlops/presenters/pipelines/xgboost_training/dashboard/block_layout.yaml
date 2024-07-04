@@ -23,6 +23,7 @@ blocks:
       type: block
     error: null
     name: SHAP values bar
+    name_new: SHAP values bar
     skip_render: false
     type: chart
     uuid: shap_values_bar

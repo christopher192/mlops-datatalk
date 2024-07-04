@@ -9,7 +9,6 @@ from mlops.utils.models.xgboost import build_data, fit_model
 if 'data_exporter' not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
 
-
 @data_exporter
 def train(
     training_set: Dict[str, Union[Series, csr_matrix]],
@@ -34,5 +33,5 @@ def train(
     )
 
     # DictVectorizer to transform features for online inference.
-    vectorizer = training_set['build_1'][6]
+    vectorizer = training_set['build'][6]
     return model, vectorizer

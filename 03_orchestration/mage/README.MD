@@ -149,6 +149,33 @@ volumes:
 ![alt text](image/image-2.png)
 
 ### <ins>4. Observability - Monitoring & Alerting</ins>
+### <ins>4.1. Pipeline Health Monitoring (Dashboard)</ins>
+1. Navigate to `unit_3_observability Pipelines > sklearn_training > Dashboard`.
+2. Click `Add recommended charts`.
+
+![alt text](image/image-3.png)
+
+### <ins>4.2. Create Trigger For `sklearn_training` Pipeline</ins>
+1. Navigate to `unit_3_observability > Pipelines > sklearn_training > Triggers`, click `New trigger` button.
+2. Choose `Schedule`, `Event`, or `API` as the `Trigger type`, then provide a name and description for both the `Trigger name` and `Trigger description`.
+3. For `Schedule`, set the `Cron expression` to `*/5 * * * *`, indicating a trigger every 5 minutes.
+4. For `API` `Trigger type`, use the `POST` method to call the API for triggering.
+5. Activation or deactivation can be done by clicking `Enable trigger` or `Disable trigger`.
+6. Activate a single trigger event by clicking on `Run@once` button.
+7. Navigate to `unit_3_observability > Pipelines > xgboost_training > Runs`, more details is presented there. 
+8. Custom chart can be included, click `Create new chart` and explore it.
+
+### <ins>4.3. Customize Layout/ Explainability</ins>
+1. Each chart has setting for `Change height and/or width`, utilize this to change layout.
+2. Create custom python block, name it as `Dashboard data source` and pick `pink` as Color. Copy code from [`unit_3_observability/custom/dashboard_data_source.py`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/custom/dashboard_data_source.py).
+3. Go to `unit_3_observability > Pipelines > xgboost_training > Dashboard`, set up custom charts for `SHAP values bar`, `SHAP value`, and `SHAP values force chart`. Ensure the chart settings are as follows:
+    - Chart type: `Custom`
+    - Data source type: `Block data output`
+    - Pipeline UUID: `xgboost_training`
+    - Block UUID: `dashboard_data_source`
+4. Copy code from [`SHAP values`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/charts/shap_values.py), [`SHAP values bar chart`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/charts/shap_values_bar.py), and [`SHAP values force plot`](https://github.com/mage-ai/mlops/blob/master/mlops/unit_3_observability/charts/shap_values_force_chart.py).
+
+### <ins>4.4. Model Performance Dashboard</ins>
 
 ### <ins>5. Triggering - Inference & Retraining</ins>
 
@@ -161,3 +188,4 @@ volumes:
 warning: unable to access '/home/codespace/.gitconfig': Is a directory
 warning: unable to access '/home/codespace/.gitconfig': Is a directory
 ```
+2. 
