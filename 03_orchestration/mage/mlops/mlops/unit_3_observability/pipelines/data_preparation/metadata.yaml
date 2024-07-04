@@ -89,7 +89,7 @@ variables:
   split_on_feature: lpep_pickup_datetime
   split_on_feature_value: '2024-02-01'
   target: duration
-variables_dir: /root/.mage_data/unit_1_data_preparation
+variables_dir: /home/src/mage_data/unit_3_observability
 widgets:
 - all_upstream_blocks_executed: true
   color: null
@@ -129,7 +129,7 @@ widgets:
   language: python
   name: missing values for ingest
   retry_config: null
-  status: executed
+  status: failed
   timeout: null
   type: chart
   upstream_blocks:
@@ -232,9 +232,8 @@ widgets:
   language: python
   name: prepare_histogram_u9
   retry_config: null
-  status: executed
+  status: failed
   timeout: null
   type: chart
-  upstream_blocks:
-  - prepare
+  upstream_blocks: []
   uuid: prepare_histogram_u9

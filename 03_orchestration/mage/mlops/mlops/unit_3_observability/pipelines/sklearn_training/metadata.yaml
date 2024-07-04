@@ -119,5 +119,5 @@ uuid: sklearn_training
 variables:
   max_evaluations: 1
   random_state: 7
-variables_dir: /root/.mage_data/unit_3_observability
+variables_dir: /home/src/mage_data/unit_3_observability
 widgets: []

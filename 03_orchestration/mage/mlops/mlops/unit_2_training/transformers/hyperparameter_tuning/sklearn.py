@@ -11,8 +11,8 @@ if 'transformer' not in globals():
 
 @transformer
 def hyperparameter_tuning(
-    model_class_name: str,
     training_set: Dict[str, Union[Series, csr_matrix]],
+    model_class_name: str,
     *args,
     **kwargs,
 ) -> Tuple[
@@ -21,7 +21,7 @@ def hyperparameter_tuning(
     Series,
     Callable[..., BaseEstimator],
 ]:
-    X, X_train, X_val, y, y_train, y_val, _ = training_set['build_1']
+    X, X_train, X_val, y, y_train, y_val, _ = training_set['build']
 
     model_class = load_class(model_class_name)
 
