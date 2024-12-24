@@ -1,5 +1,15 @@
 # MLOps Maturity Model
 
+## Create AWS EC2
+1. Go to `AWS EC2` then `launch instances`.
+2. Setup up based on these images.
+
+![](images/setup-1.png)
+
+![](images/setup-2.png)
+
+![](images/setup-3.png)
+
 ## 
 | Level | Description | Information |
 | -------- | -------- | -------- |
